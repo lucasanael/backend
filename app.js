@@ -1,14 +1,72 @@
-const express = require('express');
-const app = express();
-const port = 3000
+var Connection = require('tedious').Connection;
+
+var config = {
+
+    "server": "127.0.0.1",
+    "authentication": {
+    "type": "default",
+  
+       "options": {
+        "userName": "sa",
+        "password": "1327"
+
+    }},
+
+    "options": {
+    "port": 1433,
+    "database": "biblioteca",
+    "trustServerCertificate": true,
+    
+ }
+}
+
+var connection = new Connection(config);
+connection.on('connect', function(err){
+    console.log('Conectd !')
+    executeStatement()
+})
+;
+connection.connect()
 
 
-const userRouter = require('./app/router')
+var Request = require('tedious').Request;
+var TYPES = require('tedious').TYPES;
 
-app.use('/', userRouter);
+function executeStatement() {
 
-app.listen(port, () => {
+    var request = new Request("SELECT Exemplar, Título FROM Livros where Livros.Exemplar = '1021822' ", function (err) {
+        if (err) {
+            console.log(err);
+        }
+    });
 
-    console.log(`Servidor rodando na porta: ${port}`)
+    var result = "";
 
-});
+    request.on('row', function (columns) {
+        columns.forEach(function (column) {
+            if (column.value === null) {
+                console.log('null')
+            } else {
+                result += column.value + ""
+            }
+
+        });
+        console.log(result);
+        result = "";
+    });
+
+    request.on ('done' , function(rowCount, more){
+        console.log(rowCount + ' rows returned');
+        console.log("Linhas retornadas");
+    })
+    
+    request.on("requestCompleted", function(rowCount, more){
+    
+    connection.close();
+    
+    })
+    
+    connection.execSql(request)
+    
+
+}   
