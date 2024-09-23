@@ -16,7 +16,7 @@ function executeSQL(sql, callback) {
             if (rowCount === 0) {
 
                 callback(null, []);
-                return;
+                return; 
             }
         });
         let alunos = [];
