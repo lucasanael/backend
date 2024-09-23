@@ -48,7 +48,7 @@ exports.findAll = (callback) => {
     executeSQL(sql, callback);
 };
 
-exports.findById = (rm, callback) => {
+exports.findByRm = (rm, callback) => {
     const sql = `SELECT * FROM Alunos WHERE RM = ${rm}`;
     executeSQL(sql, (err, alunos) => {
         if (err) {

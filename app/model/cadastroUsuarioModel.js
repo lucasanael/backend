@@ -50,7 +50,7 @@ exports.findAll = (callback) => {
     executeSQL(sql, callback);
 };
 
-exports.findById = (cpf, callback) => {
+exports.findByCpf = (cpf, callback) => {
     const sql = `SELECT * FROM cadastroUsuario WHERE CPF = ${cpf}`;
     executeSQL(sql, (err, cadastroUsuario) => {
         if (err) {
