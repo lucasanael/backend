@@ -1,14 +1,13 @@
 const express = require('express');
+const clienteRoutes = require('./routes/clienteRoutes');
 const app = express();
-const port = 3000
+app.use(express.json()); 
+app.use('/api', clienteRoutes); 
 
-
-const userRouter = require('./app/router')
-
-app.use('/', userRouter);
+const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
+console.log(`Servidor rodando na porta ${port}`);
 
-    console.log(`Servidor rodando na porta: ${port}`)
 
 });
