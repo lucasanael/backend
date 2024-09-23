@@ -4,7 +4,7 @@ const cadastroHostController = require('../models/cadastroHostController');
 exports.listarTodos = (req, res) => {
 cadastroHostController.findAll((err, clientes) => {
 if (err) {
-res.status(500).send({ message: 'Erro ao buscar clientes'
+res.status(500).send({ message: 'Erro ao buscar usuário'
 });
 } else {
 res.send(clientes);
