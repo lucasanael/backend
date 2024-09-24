@@ -2,11 +2,11 @@ const express = require('express');
 
 const router = express.Router();
 
-const alunosController = require('../controllers/alunosController'); 
-const livrosController = require('../controllers/livrosController'); 
-const movimentoController = require('../controllers/movimentoController'); 
-const cadastroUsuarioController = require('../controllers/cadastroUsuarioController'); 
-const cadastroHostController = require('../controllers/cadastroHostController'); 
+const alunosController = require('../controller/alunosController.js'); 
+const livrosController = require('../controller/livrosController'); 
+const movimentoController = require('../controller/movimentoController'); 
+const cadastroUsuarioController = require('../controller/cadastroUsuarioController'); 
+const cadastroHostController = require('../controller/cadastroHostController'); 
 
 
 

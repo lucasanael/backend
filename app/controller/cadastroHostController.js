@@ -1,5 +1,5 @@
 
-const cadastroHostController = require('../model/cadastroHostController');
+const cadastroHostController = require('../model/cadastroHostModel');
 
 exports.registrarHost = (req, res) => {
     if (!req.body.cpf || !req.body.nome || !req.body.email || !req.body.Sexo || !req.body.dataNasc || !req.body.senha) {

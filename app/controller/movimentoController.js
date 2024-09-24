@@ -1,5 +1,5 @@
 
-const movimentoController = require('../model/movimentoController');
+const movimentoController = require('../model/movimentoModel.js');
 
 exports.listarTodos = (req, res) => {
     movimentoController.findAll((err, clientes) => {
