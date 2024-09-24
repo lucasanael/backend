@@ -12,7 +12,7 @@ var config = {
     },
     "options": {
         "port": 1433,
-        "database": "vendasx",
+        "database": "biblioteca",
         "trustServerCertificate": true
     }
 }
