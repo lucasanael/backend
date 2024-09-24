@@ -2,7 +2,7 @@
 const { Connection } = require("tedious");
 
 // Importa as configurações de conexão ao banco de dados do arquivo config.js
-const config = require("../config/config");
+const config = require("../config/config.js")
 
 // Função para conectar ao banco de dados
 async function connectDatabase() {

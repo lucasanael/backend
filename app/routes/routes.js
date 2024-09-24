@@ -18,9 +18,9 @@ router.post('/registraracervo', livrosController.registrarAcervo);
 
 router.put('/atualizaracervo/:Exemplar', livrosController.atualizarAcervo);
 
-router.post('/registrusuario', cadastroUsuarioController.registrarUsuario);
+router.post('/registrarusuario', cadastroUsuarioController.createUsuario);
 
-router.post('/registrhost', cadastroHostController.registrarHost);
+router.post('/registrarhost', cadastroHostController.createHost);
 
 
 module.exports = router; 
