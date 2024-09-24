@@ -1,4 +1,4 @@
-const livros = require('../model/livroModel');
+const livros = require('../model/livrosModel');
 
 exports.buscarPorExemplar = (req, res) => {
     livros.findByExemplar(req.params.Exemplar, (err, livro) => {

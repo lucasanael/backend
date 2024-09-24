@@ -1,5 +1,5 @@
 
-const alunosController = require('../model/alunoModel.js');
+const alunosController = require('../model/alunosModel.js');
 
 
 exports.buscarPorRM = (req, res) => {
