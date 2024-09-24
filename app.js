@@ -1,12 +1,12 @@
 const express = require('express');
 
-const clienteRoutes = require('./routes/routes.js');
+const clienteRoutes = require('./router/routes.js');
 
 const app = express();
 
 app.use(express.json()); 
 
-app.use('/api', clienteRoutes); 
+app.use('/router', clienteRoutes); 
 
 const port = process.env.PORT || 3000;
 
