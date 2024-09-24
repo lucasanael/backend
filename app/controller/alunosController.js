@@ -3,7 +3,7 @@ const alunosController = require('../model/alunoModel.js');
 
 
 exports.buscarPorRM = (req, res) => {
-    alunosController.findByRM(req.params.RM, (err, aluno) => {
+    alunosController.findByRM(req.params.rm, (err, aluno) => {
         if (err) {
             res.status(500).send({
                 message: 'Erro ao buscar Aluno'
