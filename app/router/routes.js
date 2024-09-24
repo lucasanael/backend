@@ -20,18 +20,7 @@ router.put('/atualizaracervo/:Exemplar', livrosController.atualizarAcervo);
 
 router.post('/registrusuario', cadastroUsuarioController.registrarUsuario);
 
-router.post('/registrusuario', cadastroHostController.registrarHost);
+router.post('/registrhost', cadastroHostController.registrarHost);
 
 
-// Esta rota responde a requisições PUT, atualizando os dados de um
-//cliente existente baseado no ID fornecido.
-// Utiliza a função atualizar do controller de clientes para modificar
-//o cliente especificado no banco de dados.
-// Rota para deletar um cliente
-// DELETE /api/clientes/:id
-router.delete('/clientes/:id', clientesController.excluir);
-// Esta rota responde a requisições DELETE, removendo um cliente do
-//banco de dados baseado no ID fornecido.
-// Utiliza a função excluir do controller de clientes para deletar o
-//cliente especificado.
 module.exports = router; 

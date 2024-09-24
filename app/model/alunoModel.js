@@ -1,5 +1,7 @@
 const { Connection, Request } = require('tedious');
+
 const config = require('../config/dbconfig');
+
 function executeSQL(sql, callback) {
     const connection = new Connection(config);
     connection.on('connect', err => {
@@ -16,7 +18,7 @@ function executeSQL(sql, callback) {
             if (rowCount === 0) {
 
                 callback(null, []);
-                return; 
+                return;
             }
         });
         let alunos = [];
@@ -43,13 +45,8 @@ function executeSQL(sql, callback) {
     connection.connect();
 }
 
-exports.findAll = (callback) => {
-    const sql = "SELECT * FROM Alunos";
-    executeSQL(sql, callback);
-};
-
-exports.findByRm = (rm, callback) => {
-    const sql = `SELECT * FROM Alunos WHERE RM = ${rm}`;
+exports.buscarPorRM = (RM, callback) => {
+    const sql = `SELECT * FROM Alunos WHERE RM = ${RM}`;
     executeSQL(sql, (err, alunos) => {
         if (err) {
             callback(err, null);
@@ -61,23 +58,3 @@ exports.findByRm = (rm, callback) => {
         }
     });
 };
-
-exports.create = (aluno, callback) => {
-    const sql = `INSERT INTO Alunos (nome, sexo, data_nascimento, email) VALUES
-('${aluno.nome}', '${aluno.sexo}', '${aluno.data_nascimento}', '${aluno.email}')`;
-    executeSQL(sql, callback);
-};
-
-exports.update = (rm, aluno, callback) => {
-    const sql = `UPDATE Alunos SET nome = '${aluno.nome}', sexo =
-'${aluno.sexo}', data_nascimento = '${aluno.data_nascimento}', email = '${aluno.email}', WHERE RM =
-${rm}`;
-    executeSQL(sql, callback);
-};
-
-exports.delete = (rm, callback) => {
-    const sql = `DELETE FROM Alunos WHERE RM = ${rm}`;
-    executeSQL(sql, callback);
-};
-
-

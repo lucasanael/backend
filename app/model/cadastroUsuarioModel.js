@@ -1,5 +1,6 @@
 
 const { Connection, Request } = require('tedious');
+
 const config = require('../config/dbconfig');
 
 function executeSQL(sql, callback) {
@@ -45,38 +46,8 @@ function executeSQL(sql, callback) {
     connection.connect();
 }
 
-exports.findAll = (callback) => {
-    const sql = "SELECT * FROM cadastroUsuario";
-    executeSQL(sql, callback);
-};
-
-exports.findByCpf = (cpf, callback) => {
-    const sql = `SELECT * FROM cadastroUsuario WHERE CPF = ${cpf}`;
-    executeSQL(sql, (err, cadastroUsuario) => {
-        if (err) {
-            callback(err, null);
-        } else {
-
-            const cadastroUsuario = cadastroUsuario.length > 0 ? cadastroUsuario[0] : null;
-            callback(null, cadastroUsuario);
-        }
-    });
-};
-
-exports.create = (cadastroUsuario, callback) => {
-    const sql = `INSERT INTO cadastroUsuario (sexo, nome, telefone, dataNasc, email) VALUES
-('${cadastroUsuario.sexo}', '${cadastroUsuario.nome}', '${cadastroUsuario.telefone}', '${cadastroUsuario.dataNasc}', '${cadastroUsuario.email}')`;
-    executeSQL(sql, callback);
-};
-
-exports.update = (cpf, cadastroUsuario, callback) => {
-    const sql = `UPDATE cadastroUsuarios SET sexo = '${cadastroUsuario.sexo}', nome = '${cadastroUsuario.nome}', telefone = '${cadastroUsuario.telefone}', dataNasc =
-'${cadastroUsuario.dataNasc}', email = '${cadastroUsuario.email}'  WHERE CPF =
-${cpf}`;
-    executeSQL(sql, callback);
-};
-
-exports.delete = (cpf, callback) => {
-    const sql = `DELETE FROM cadastroUsuarios WHERE CPF = ${cpf}`;
+exports.registrarUsuario = (cadastroUsuario, callback) => {
+    const sql = `INSERT INTO cadastroUsuario (cpf, Sexo, nome, telefone, dataNasc, email) VALUES
+('${cadastroUsuario.cpf}', '${cadastroUsuario.Sexo}', '${cadastroUsuario.nome}', '${cadastroUsuario.telefone}', '${cadastroUsuario.dataNasc}', '${cadastroUsuario.email}')`;
     executeSQL(sql, callback);
 };

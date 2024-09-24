@@ -1,5 +1,7 @@
 const { Connection, Request } = require('tedious');
+
 const config = require('../config/dbconfig');
+
 function executeSQL(sql, callback) {
     const connection = new Connection(config);
     connection.on('connect', err => {
@@ -42,14 +44,10 @@ function executeSQL(sql, callback) {
     });
     connection.connect();
 }
+ 
 
-exports.findAll = (callback) => {
-    const sql = "SELECT * FROM Livros";
-    executeSQL(sql, callback);
-};
-
-exports.findByExemplar = (exemplar, callback) => {
-    const sql = `SELECT * FROM Livros WHERE EXEMPLAR = ${exemplar}`;
+exports.buscarPorExemplar = (Exemplar, callback) => {
+    const sql = `SELECT * FROM Livros WHERE EXEMPLAR = ${Exemplar}`;
     executeSQL(sql, (err, livros) => {
         if (err) {
             callback(err, null);
@@ -62,22 +60,16 @@ exports.findByExemplar = (exemplar, callback) => {
     });
 };
 
-exports.create = (livro, callback) => {
-    const sql = `INSERT INTO Livros (exemplar, nomeAutor, titulo, assunto, nChamada, acervo, isbn, quantidade, situcao) VALUES
-('${livro.exemplar}', '${livro.nomeAutor}', '${livro.titulo}', '${livro.assunto}', '${livro.nChamada}', 
+exports.registrarAcervo = (livro, callback) => {
+    const sql = `INSERT INTO Livros (exemplar, nomeAutor, titulo, assunto, nChamada, acervo, isbn, quantidade, situacao) VALUES
+('${livro.Exemplar}', '${livro.nomeAutor}', '${livro.titulo}', '${livro.assunto}', '${livro.nChamada}', 
 '${livro.acervo}', '${livro.isbn}', '${livro.quantidade}', '${livro.situcao}')`; executeSQL(sql, callback);
 };
 
-exports.update = (exemplar, livro, callback) => {
-    const sql = `UPDATE Livros SET exemplar = '${livro.exemplar}', nomeAutor =
+exports.atualizarAcervo = (Exemplar, livro, callback) => {
+    const sql = `UPDATE Livros SET Exemplar = '${livro.Exemplar}', nomeAutor =
 '${aluno.nomeAutor}', titulo = '${livro.titulo}', assunto = '${livro.assunto}', nChamada = '${livro.nChamada}',
  acervo = '${livro.acervo}', isbn = '${livro.isbn}', quantidade = '${livro.quantidade}', situação = '${livro.situcao}', WHERE EXEMPLAR =
-${exemplar}`;
+${Exemplar}`;
     executeSQL(sql, callback);
 };
-
-exports.delete = (exemplar, callback) => {
-    const sql = `DELETE FROM Livros WHERE EXEMPLAR = ${exemplar}`;
-    executeSQL(sql, callback);
-};
-

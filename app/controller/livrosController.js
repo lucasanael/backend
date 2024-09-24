@@ -40,7 +40,7 @@ exports.registrarAcervo = (req, res) => {
 
 
 exports.atualizarAcervo = (req, res) => {
-    if (!req.body.exemplar || !req.body.nomeAutor || !req.body.titulo || !req.body.assunto || !req.body.nChamada || !req.body.acervo || !req.body.isbn || !req.body.quantidade || !req.body.situacao) {
+    if (!req.body.Exemplar || !req.body.nomeAutor || !req.body.titulo || !req.body.assunto || !req.body.nChamada || !req.body.acervo || !req.body.isbn || !req.body.quantidade || !req.body.situacao) {
         res.status(400).send({ message: 'Dados incompletos para encontrar o livro!' });
         return;
     }

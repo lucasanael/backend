@@ -63,14 +63,14 @@ exports.findById = (id, callback) => {
 };
 
 exports.create = (movimento, callback) => {
-    const sql = `INSERT INTO Movimentos (id, rm, exemplar,tipoMovimento, dataEmprestimo) VALUES
-('${movimento.id}', '${movimento.rm}', '${movimento.exemplar}', '${movimento.tipoMovimento}', '${movimento.dataEmprestimo}')`;
+    const sql = `INSERT INTO Movimentos (id, rm, Exemplar,tipoMovimento, dataEmprestimo) VALUES
+('${movimento.id}', '${movimento.rm}', '${movimento.Exemplar}', '${movimento.tipoMovimento}', '${movimento.dataEmprestimo}')`;
     executeSQL(sql, callback);
 };
 
 exports.update = (id, movimento, callback) => {
     const sql = `UPDATE Movimentos SET id = '${movimento.id}', rm =
-'${movimento.rm}', exemplar = '${movimento.exemplar}', tipoMovimento = '${movimento.tipoMovimento}', '${movimento.dataEmprestimo}' WHERE ID =
+'${movimento.rm}', Exemplar = '${movimento.Exemplar}', tipoMovimento = '${movimento.tipoMovimento}', '${movimento.dataEmprestimo}' WHERE ID =
 ${id}`;
     executeSQL(sql, callback);
 };
