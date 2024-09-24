@@ -16,6 +16,8 @@ router.get('/alunos/:rm', alunosController.getAluno);
 
 router.post('/registraracervo', livrosController.registrarAcervo);
 
+router.get('/buscaracervo/:Exemplar', livrosController.buscarPorExemplar);
+
 router.put('/atualizaracervo/:Exemplar', livrosController.atualizarAcervo);
 
 router.post('/registrusuario', cadastroUsuarioController.registrarUsuario);
