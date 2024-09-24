@@ -1,5 +1,5 @@
 const { Connection } = require('tedious');
-const express = require('express');
+
 
 var config = {
     "server": "localhost",

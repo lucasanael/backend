@@ -1,6 +1,6 @@
 const { Connection, Request } = require('tedious');
 
-const config = require('../config/dbconfig');
+const config = require('../config/config');
 
 function executeSQL(sql, callback) {
     const connection = new Connection(config);

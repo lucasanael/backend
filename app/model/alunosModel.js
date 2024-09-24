@@ -1,60 +1,59 @@
-const { Connection, Request } = require('tedious');
+const { Request, TYPES } = require("tedious");
 
-const config = require('../config/dbconfig');
+const connectDatabase = require("../db/connection");
 
-function executeSQL(sql, callback) {
-    const connection = new Connection(config);
-    connection.on('connect', err => {
-        if (err) {
-            console.error('Erro de conexão:', err);
-            callback(err, null);
-            return;
-        }
-        const request = new Request(sql, (err, rowCount) => {
+async function executeQuery(query, params = []) {
+
+    const connection = await connectDatabase();
+
+
+    return new Promise((resolve, reject) => {
+
+        const request = new Request(query, (err) => {
             if (err) {
-                console.error('Erro ao executar a consulta:', err);
-                return;
-            }
-            if (rowCount === 0) {
 
-                callback(null, []);
-                return;
+                reject(err);
+                connection.close();
             }
         });
-        let alunos = [];
-        request.on('row', columns => {
-            let aluno = {};
-            columns.forEach(column => {
-                aluno[column.metadata.colName] = column.value;
+
+        params.forEach(({ name, type, value }) => {
+            request.addParameter(name, type, value);
+        });
+
+        let results = [];
+
+
+        request.on("row", (columns) => {
+
+            let row = {};
+            columns.forEach((column) => {
+                row[column.metadata.colName] = column.value;
             });
-            alunos.push(aluno);
+            results.push(row);
         });
-        request.on('requestCompleted', () => {
-            callback(null, alunos);
-        });
-        request.on('error', err => {
-            console.error('Erro durante a requisição:', err);
-            callback(err, null);
-        });
-        request.on('done', () => {
-            connection.close();
 
+
+        request.on("requestCompleted", () => {
+
+            connection.close();
+            resolve(results);
         });
+
+
         connection.execSql(request);
     });
-    connection.connect();
 }
 
-exports.buscarPorRM = (RM, callback) => {
-    const sql = `SELECT * FROM Alunos WHERE RM = ${RM}`;
-    executeSQL(sql, (err, alunos) => {
-        if (err) {
-            callback(err, null);
-        } else {
+async function getAlunobyRm(rm) {
+    const query = "SELECT * FROM Alunos WHERE RM = @RM;";
+    const params = [{ name: "RM", type: TYPES.Int, value: rm }];
+    const users = await executeQuery(query, params);
+    return users.length > 0 ? users[0] : null;
+}
 
 
-            const aluno = alunos.length > 0 ? alunos[0] : null;
-            callback(null, aluno);
-        }
-    });
+
+module.exports = {
+    getAlunobyRm
 };
