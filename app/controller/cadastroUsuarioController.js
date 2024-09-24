@@ -1,19 +1,26 @@
-const cadastroUsuario = require('../model/cadastroUsuarioModel');
 
-exports.registrarUsuario = (req, res) => {
-    if (!req.body.cpf || !req.body.Sexo || !req.body.nome || !req.body.telefone || !req.body.dataNasc || !req.body.email) {
-        res.status(400).send({ message: 'Dados incompletos!' }); //
+const userModel = require("../model/cadastroUsuarioModel");
 
-        return;
-    }
-    cadastroUsuario.create(req.body, (err) => {
-        if (err) {
-            res.status(500).send({
-                message: 'Erro ao criar cadastro de usuário'
+async function createUsuario(req, res) {
 
-            });
-        } else {
-            res.status(201).send({ message: 'Cadastro criado com sucesso' });
-        }
-    });
+    const { cpf, Sexo, name, telefone, dataNasc, email } = req.body;
+    
+  try {
+
+    await userModel.createUsuario(cpf, Sexo, name, telefone, dataNasc, email);
+    
+
+    res.status(201).send("Usuário criado com sucesso");
+  } catch (err) {
+
+    console.error(err.message);
+    res.status(500).send("Erro ao criar o usuário");
+  }
+}
+
+
+module.exports = {
+  createUsuario,
+  
 };
+

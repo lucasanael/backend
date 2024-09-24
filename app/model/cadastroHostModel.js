@@ -1,53 +1,64 @@
+const { Request, TYPES } = require("tedious");
 
-const { Connection, Request } = require('tedious');
+const connectDatabase = require("../db/connection");
 
-const config = require('../config/config');
+async function executeQuery(query, params = []) {
 
-function executeSQL(sql, callback) {
-    const connection = new Connection(config);
-    connection.on('connect', err => {
-        if (err) {
-            console.error('Erro de conexão:', err);
-            callback(err, null);
-            return;
-        }
-        const request = new Request(sql, (err, rowCount) => {
-            if (err) {
-                console.error('Erro ao executar a consulta:', err);
-                return;
-            }
-            if (rowCount === 0) {
-                callback(null, []);
+    const connection = await connectDatabase();
+  
 
-                return;
-            }
-        });
-        let cadastroHost = [];
-        request.on('row', columns => {
-            let cadastroHost = {};
-            columns.forEach(column => {
-                cadastroHost[column.metadata.colName] = column.value;
-            });
-            cadastroHost.push(cadastroHost);
-        });
-        request.on('requestCompleted', () => {
-            callback(null, cadastroHost);
-        });
-        request.on('error', err => {
-            console.error('Erro durante a requisição:', err);
-            callback(err, null);
-        });
-        request.on('done', () => {
-            connection.close();
+    return new Promise((resolve, reject) => {
 
-        });
-        connection.execSql(request);
+        const request = new Request(query, (err) => {
+      if (err) {
+
+        reject(err);
+        connection.close();
+      }
     });
-    connection.connect();
+
+    params.forEach(({ name, type, value }) => {
+      request.addParameter(name, type, value);
+    });
+
+
+    let results = [];
+
+
+    request.on("row", (columns) => {
+
+        let row = {};
+      columns.forEach((column) => {
+        row[column.metadata.colName] = column.value;
+      });
+      results.push(row);
+    });
+
+
+    request.on("requestCompleted", () => {
+
+        connection.close();
+      resolve(results);
+    });
+
+    connection.execSql(request);
+  });
 }
 
-exports.registrarHost = (cadastroHost, callback) => {
-    const sql = `INSERT INTO cadastroHost (nome, email, sexo, dataNasc, senha) VALUES
-('${cadastroHost.cpf}', '${cadastroHost.nome}', '${cadastroHost.email}', '${cadastroHost.sexo}', '${cadastroHost.dataNasc}' , '${cadastroHost.senha}')`;
-    executeSQL(sql, callback);
+
+async function createHost(name, email, Sexo, dataNasc, senha) {
+  const query = `INSERT INTO CadastroHost (nome, email, Sexo, dataNasc, senha) VALUES (@nome, @email, @Sexo, @dataNasc, @senha);`;  
+  const params = [
+    { name: "nome", type: TYPES.NVarChar, value: name },  
+    { name: "email", type: TYPES.NVarChar, value: email },  
+    { name: "Sexo", type: TYPES.NVarChar, value: Sexo },  
+    { name: "dataNasc", type: TYPES.NVarChar, value: dataNasc},
+    { name: "senha", type: TYPES.NVarChar, value: senha}
+  ];
+  await executeQuery(query, params); 
+}
+
+module.exports = {
+  createHost,
+
 };
