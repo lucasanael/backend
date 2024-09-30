@@ -14,6 +14,7 @@ async function executeQuery(query, params = []) {
     const request = new Request(query, (err) => {
       if (err) {
         // Se ocorrer um erro, a Promise é rejeitada e a conexão é fechada
+        console.error(err);
         reject(err);
         connection.close();
       }
@@ -92,9 +93,16 @@ const query = `UPDATE Livros SET nomeAutor = @nomeAutor, titulo = @titulo, assun
   await executeQuery(query, params);  // Executa a query com os parâmetros
 }
 
+async function getAllBooks() {
+  const  query = "SELECT * FROM Livros";
+  return await executeQuery(query)
+
+}
+
 // Exporta as funções para serem usadas nos controllers
 module.exports = {
   buscarPorExemplar,
   registrarAcervo,
-  atualizarAcervo
+  atualizarAcervo,
+  getAllBooks,
 };

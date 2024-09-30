@@ -17,6 +17,8 @@ router.get('/buscaracervo/:Exemplar', livrosController.buscarPorExemplar);
 
 router.put('/atualizaracervo/:Exemplar', livrosController.atualizarAcervo);
 
+router.get('/atualizaracervo/', livrosController.getBooks);
+
 router.post('/registrarusuario', cadastroUsuarioController.createUsuario);
 
 router.post('/registrarhost', cadastroHostController.createHost);
