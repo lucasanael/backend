@@ -1,75 +1,99 @@
-const { Connection, Request } = require('tedious');
+const { Request, TYPES } = require("tedious");
 
-const config = require('../config/config');
+// Importa a função que conecta ao banco de dados
+const connectDatabase = require("../db/connection");
 
-function executeSQL(sql, callback) {
-    const connection = new Connection(config);
-    connection.on('connect', err => {
-        if (err) {
-            console.error('Erro de conexão:', err);
-            callback(err, null);
-            return;
-        }
-        const request = new Request(sql, (err, rowCount) => {
-            if (err) {
-                console.error('Erro ao executar a consulta:', err);
-                return;
-            }
-            if (rowCount === 0) {
-
-                callback(null, []);
-                return;
-            }
-        });
-        let livros = [];
-        request.on('row', columns => {
-            let livro = {};
-            columns.forEach(column => {
-                livro[column.metadata.colName] = column.value;
-            });
-            alunos.push(livro);
-        });
-        request.on('requestCompleted', () => {
-            callback(null, livros);
-        });
-        request.on('error', err => {
-            console.error('Erro durante a requisição:', err);
-            callback(err, null);
-        });
-        request.on('done', () => {
-            connection.close();
-
-        });
-        connection.execSql(request);
+// Função genérica para executar uma query SQL
+async function executeQuery(query, params = []) {
+  // Estabelece uma conexão com o banco de dados
+  const connection = await connectDatabase();
+  
+  // Retorna uma Promise para lidar com a execução assíncrona da query
+  return new Promise((resolve, reject) => {
+    // Cria uma nova requisição SQL com a query passada e um callback para erros
+    const request = new Request(query, (err) => {
+      if (err) {
+        // Se ocorrer um erro, a Promise é rejeitada e a conexão é fechada
+        reject(err);
+        connection.close();
+      }
     });
-    connection.connect();
+
+    // Adiciona parâmetros à requisição SQL (nome, tipo e valor)
+    params.forEach(({ name, type, value }) => {
+      request.addParameter(name, type, value);
+    });
+
+    // Array para armazenar os resultados retornados pela query
+    let results = [];
+
+    // Evento "row" é disparado para cada linha retornada pela query
+    request.on("row", (columns) => {
+      // Cria um objeto para cada linha e armazena suas colunas e valores
+      let row = {};
+      columns.forEach((column) => {
+        row[column.metadata.colName] = column.value;
+      });
+      results.push(row);
+    });
+
+    // Evento "requestCompleted" é disparado quando a query é completamente executada
+    request.on("requestCompleted", () => {
+      // Fecha a conexão com o banco de dados e resolve a Promise com os resultados
+      connection.close();
+      resolve(results);
+    });
+
+    // Executa a requisição SQL
+    connection.execSql(request);
+  });
 }
- 
 
-exports.buscarPorExemplar = (Exemplar, callback) => {
-    const sql = `SELECT * FROM Livros WHERE EXEMPLAR = ${Exemplar}`;
-    executeSQL(sql, (err, livros) => {
-        if (err) {
-            callback(err, null);
-        } else {
+// Função para obter um usuário pelo ID
+async function buscarPorExemplar(Exemplar) {
+  const query = "SELECT * FROM Livros WHERE Exemplar = @Exemplar;";  // Query SQL com um parâmetro para filtrar pelo ID
+  const params = [{ name: "Exemplar", type: TYPES.VarChar, value: Exemplar }];  // Define o parâmetro @id para ser passado na query
+  const users = await executeQuery(query, params);  // Executa a query com os parâmetros
+  return users.length > 0 ? users[0] : null;  // Retorna o primeiro usuário se houver algum resultado, ou null se não houver
+}
+
+// Função para criar um novo usuário
+async function registrarAcervo(Exemplar, nomeAutor, titulo, assunto, nChamada, acervo, isbn, quantidade, situacao) {
+  const query = `INSERT INTO Livros (Exemplar, nomeAutor, titulo, assunto, nChamada, acervo, isbn, quantidade, situacao) VALUES (@Exemplar, @nomeAutor, @titulo,  @assunto,  @nChamada,  @acervo,  @isbn,  @quantidade,  @situacao);`;
+  const params = [
+    { name: "Exemplar", type: TYPES.VarChar, value: Exemplar },  
+    { name: "nomeAutor", type: TYPES.VarChar, value: nomeAutor }, 
+    { name: "titulo", type: TYPES.VarChar, value: titulo }, 
+    { name: "assunto", type: TYPES.VarChar, value: assunto }, 
+    { name: "nChamada", type: TYPES.VarChar, value: nChamada }, 
+    { name: "acervo", type: TYPES.VarChar, value: acervo },  
+    { name: "isbn", type: TYPES.Int, value: isbn },  
+    { name: "quantidade", type: TYPES.Int, value: quantidade }, 
+    { name: "situacao", type: TYPES.VarChar, value: situacao }, 
+  ];
+  await executeQuery(query, params); 
+}
 
 
-            const livro = livros.length > 0 ? livros[0] : null;
-            callback(null, livro);
-        }
-    });
-};
+async function atualizarAcervo(Exemplar, nomeAutor, titulo, assunto, nChamada, acervo, isbn, quantidade, situacao) {
+const query = `INSERT INTO Livros (Exemplar, nomeAutor, titulo, assunto, nChamada, acervo, isbn, quantidade, situacao) VALUES (@Exemplar, @nomeAutor, @titulo,  @assunto,  @nChamada,  @acervo,  @isbn,  @quantidade,  @situacao);`
+  const params = [
+    { name: "Exemplar", type: TYPES.VarChar, value: Exemplar },  
+    { name: "nomeAutor", type: TYPES.VarChar, value: nomeAutor }, 
+    { name: "titulo", type: TYPES.VarChar, value: titulo }, 
+    { name: "assunto", type: TYPES.VarChar, value: assunto }, 
+    { name: "nChamada", type: TYPES.VarChar, value: nChamada }, 
+    { name: "acervo", type: TYPES.VarChar, value: acervo },  
+    { name: "isbn", type: TYPES.Int, value: isbn },  
+    { name: "quantidade", type: TYPES.Int, value: quantidade }, 
+    { name: "situacao", type: TYPES.VarChar, value: situacao }, 
+  ];
+  await executeQuery(query, params);  // Executa a query com os parâmetros
+}
 
-exports.registrarAcervo = (livro, callback) => {
-    const sql = `INSERT INTO Livros (exemplar, nomeAutor, titulo, assunto, nChamada, acervo, isbn, quantidade, situacao) VALUES
-('${livro.Exemplar}', '${livro.nomeAutor}', '${livro.titulo}', '${livro.assunto}', '${livro.nChamada}', 
-'${livro.acervo}', '${livro.isbn}', '${livro.quantidade}', '${livro.situcao}')`; executeSQL(sql, callback);
-};
-
-exports.atualizarAcervo = (Exemplar, livro, callback) => {
-    const sql = `UPDATE Livros SET Exemplar = '${livro.Exemplar}', nomeAutor =
-'${aluno.nomeAutor}', titulo = '${livro.titulo}', assunto = '${livro.assunto}', nChamada = '${livro.nChamada}',
- acervo = '${livro.acervo}', isbn = '${livro.isbn}', quantidade = '${livro.quantidade}', situação = '${livro.situcao}', WHERE EXEMPLAR =
-${Exemplar}`;
-    executeSQL(sql, callback);
+// Exporta as funções para serem usadas nos controllers
+module.exports = {
+  buscarPorExemplar,
+  registrarAcervo,
+  atualizarAcervo
 };
