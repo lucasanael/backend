@@ -76,7 +76,7 @@ async function registrarAcervo(Exemplar, nomeAutor, titulo, assunto, nChamada, a
 
 
 async function atualizarAcervo(Exemplar, nomeAutor, titulo, assunto, nChamada, acervo, isbn, quantidade, situacao) {
-const query = `INSERT INTO Livros (Exemplar, nomeAutor, titulo, assunto, nChamada, acervo, isbn, quantidade, situacao) VALUES (@Exemplar, @nomeAutor, @titulo,  @assunto,  @nChamada,  @acervo,  @isbn,  @quantidade,  @situacao);`
+const query = `UPDATE Livros SET nomeAutor = @nomeAutor, titulo = @titulo, assunto = @assunto, nChamada = @nChamada, acervo = @acervo, isbn = @isbn, quantidade = @quantidade, situacao = @situacao WHERE Exemplar = @Exemplar`
   const params = [
     { name: "Exemplar", type: TYPES.VarChar, value: Exemplar },  
     { name: "nomeAutor", type: TYPES.VarChar, value: nomeAutor }, 

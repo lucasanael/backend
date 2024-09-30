@@ -9,9 +9,6 @@ const cadastroUsuarioController = require('../controller/cadastroUsuarioControll
 const cadastroHostController = require('../controller/cadastroHostController.js'); 
 
 
-
-
-
 router.get('/alunos/:rm', alunosController.getAluno);
 
 router.post('/registraracervo', livrosController.registrarAcervo);
