@@ -47,14 +47,14 @@ async function executeQuery(query, params = []) {
 
 
 async function createUsuario(cpf, Sexo, name, telefone, dataNasc, email) {
-  const query = `INSERT INTO CadastroUsuario (cpf, Sexo, nome, telefone, dataNasc, email) VALUES (@cpf, @Sexo, @nome, @telefone, @dataNasc, @email);`;  
+  const query = `INSERT INTO cadastroUsuario (cpf, Sexo, nome, telefone, dataNasc, email) VALUES (@cpf, @Sexo, @nome, @telefone, @dataNasc, @email);`;  
   const params = [
-    { name: "cpf", type: TYPES.Int, value: cpf},
-    { name: "Sexo", type: TYPES.NVarChar, value: Sexo },  
-    { name: "nome", type: TYPES.NVarChar, value: name },  
-    { name: "telefone", type: TYPES.NVarChar, value: telefone },  
-    { name: "dataNasc", type: TYPES.NVarChar, value: dataNasc},
-    { name: "email", type: TYPES.NVarChar, value: email}
+    { name: "cpf", type: TYPES.VarChar, value: cpf},
+    { name: "Sexo", type: TYPES.Char, value: Sexo },  
+    { name: "nome", type: TYPES.VarChar, value: name },  
+    { name: "telefone", type: TYPES.VarChar, value: telefone },  
+    { name: "dataNasc", type: TYPES.Date, value: dataNasc},
+    { name: "email", type: TYPES.VarChar, value: email}
   ];
   await executeQuery(query, params); 
 }

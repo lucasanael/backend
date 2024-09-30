@@ -47,13 +47,13 @@ async function executeQuery(query, params = []) {
 
 
 async function createHost(name, email, Sexo, dataNasc, senha) {
-  const query = `INSERT INTO CadastroHost (nome, email, Sexo, dataNasc, senha) VALUES (@nome, @email, @Sexo, @dataNasc, @senha);`;  
+  const query = `INSERT INTO cadastroHost (nome, email, Sexo, dataNasc, senha) VALUES (@nome, @email, @Sexo, @dataNasc, @senha);`;  
   const params = [
-    { name: "nome", type: TYPES.NVarChar, value: name },  
-    { name: "email", type: TYPES.NVarChar, value: email },  
-    { name: "Sexo", type: TYPES.NVarChar, value: Sexo },  
-    { name: "dataNasc", type: TYPES.NVarChar, value: dataNasc},
-    { name: "senha", type: TYPES.NVarChar, value: senha}
+    { name: "nome", type: TYPES.VarChar, value: name },  
+    { name: "email", type: TYPES.VarChar, value: email },  
+    { name: "Sexo", type: TYPES.Char, value: Sexo },  
+    { name: "dataNasc", type: TYPES.Date, value: dataNasc},
+    { name: "senha", type: TYPES.VarChar, value: senha}
   ];
   await executeQuery(query, params); 
 }
