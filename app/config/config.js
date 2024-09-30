@@ -7,7 +7,7 @@ var config = {
         "type": "default",
         "options": {
             "userName": "sa",
-            "password": "2121"
+            "password": "1327"
         }
     },
     "options": {

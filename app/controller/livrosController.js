@@ -28,7 +28,7 @@ async function registrarAcervo(req, res) {
   const { Exemplar, nomeAutor, titulo, assunto, nChamada, acervo, isbn, quantidade, situacao } = req.body;
   try {
     // Chama o método do modelo para criar o novo usuário com os dados fornecExemplaros
-    await userModel.createUser(Exemplar, nomeAutor, titulo, assunto, nChamada, acervo, isbn, quantidade, situacao);
+    await userModel.registrarAcervo(Exemplar, nomeAutor, titulo, assunto, nChamada, acervo, isbn, quantidade, situacao);
     
     // Retorna um status 201 (criado com sucesso)
     res.status(201).send("Usuário criado com sucesso");
