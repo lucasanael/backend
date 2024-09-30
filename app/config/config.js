@@ -7,11 +7,9 @@ var config = {
         "type": "default",
         "options": {
             "userName": "sa",
-<<<<<<< HEAD
+
             "password": "corinthians1910"
-=======
-            "password": "1327"
->>>>>>> 3603176348017f4dfed10cab4e8b6ae9862d3f18
+
         }
     },
     "options": {
