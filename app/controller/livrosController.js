@@ -25,10 +25,10 @@ async function buscarPorExemplar(req, res) {
 // Função para criar um novo usuário
 async function registrarAcervo(req, res) {
   // Extrai as informações do novo usuário a partir do corpo da requisição (name, email, age)
-  const { Exemplar, Autor, Título, Assunto, nChamada, Acervo, ISBN, Situacao, Quantidade } = req.body;
+  const { Exemplar, Autor, Título, Assunto, nChamada, Acervo, ISBN, Quantidade ,Situacao } = req.body;
   try {
     // Chama o método do modelo para criar o novo usuário com os dados fornecExemplaros
-    await userModel.registrarAcervo(Exemplar, Autor, Título, Assunto, nChamada, Acervo, ISBN, Situacao, Quantidade);
+    await userModel.registrarAcervo(Exemplar, Autor, Título, Assunto, nChamada, Acervo, ISBN, Quantidade ,Situacao);
   
     // Retorna um status 201 (criado com sucesso)
     res.status(201).send("Usuário criado com sucesso");
