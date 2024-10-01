@@ -4,9 +4,9 @@ const router = express.Router();
 
 const alunosController = require('../controller/alunosController.js'); 
 const livrosController = require('../controller/livrosController.js'); 
-const movimentoController = require('../controller/movimentoController.js'); 
+const emprestarController = require('../controller/emprestarController.js'); 
+const reservaController  = require ('../controller/reservaController.js')
 const cadastroUsuarioController = require('../controller/cadastroUsuarioController.js'); 
-const cadastroHostController = require('../controller/cadastroHostController.js'); 
 
 
 router.get('/alunos/:rm', alunosController.getAluno);
@@ -19,7 +19,9 @@ router.put('/atualizaracervo/:Exemplar', livrosController.atualizarAcervo);
 
 router.post('/registrarusuario', cadastroUsuarioController.createUsuario);
 
-router.post('/registrarhost', cadastroHostController.createHost);
+router.post('/reservar', reservaController.registrarReserva)
+
+router.post('/emprestar', emprestarController.registrarEmprestimo)
 
 
 module.exports = router; 
