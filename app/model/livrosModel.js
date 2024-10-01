@@ -59,44 +59,38 @@ async function buscarPorExemplar(Exemplar) {
 }
 
 // Função para criar um novo usuário
-async function registrarAcervo(Exemplar, nomeAutor, titulo, assunto, nChamada, acervo, isbn, quantidade, situacao) {
-  const query = `INSERT INTO Livros (Exemplar, nomeAutor, titulo, assunto, nChamada, acervo, isbn, quantidade, situacao) VALUES (@Exemplar, @nomeAutor, @titulo,  @assunto,  @nChamada,  @acervo,  @isbn,  @quantidade,  @situacao);`;
+async function registrarAcervo(Exemplar, Autor, Título, Assunto, nChamada, Acervo, ISBN, Quantidade, Situacao) {
+  const query = `INSERT INTO Livros (Exemplar, Autor, Título, Assunto, nChamada, Acervo, ISBN, Quantidade, Situacao) VALUES (@Exemplar, @Autor, @Título,  @Assunto, @nChamada, @Acervo,  @ISBN,  @Quantidade,  @Situacao);`;
   const params = [
     { name: "Exemplar", type: TYPES.VarChar, value: Exemplar },  
-    { name: "nomeAutor", type: TYPES.VarChar, value: nomeAutor }, 
-    { name: "titulo", type: TYPES.VarChar, value: titulo }, 
-    { name: "assunto", type: TYPES.VarChar, value: assunto }, 
-    { name: "nChamada", type: TYPES.VarChar, value: nChamada }, 
-    { name: "acervo", type: TYPES.VarChar, value: acervo },  
-    { name: "isbn", type: TYPES.Int, value: isbn },  
-    { name: "quantidade", type: TYPES.Int, value: quantidade }, 
-    { name: "situacao", type: TYPES.VarChar, value: situacao }, 
+    { name: "Autor", type: TYPES.VarChar, value: Autor }, 
+    { name: "Título", type: TYPES.VarChar, value: Título }, 
+    { name: "Assunto", type: TYPES.VarChar, value: Assunto },
+    { name: "nChamda", type: TYPES.VarChar, value: nChamada },
+    { name: "Acervo", type: TYPES.VarChar, value: Acervo },  
+    { name: "ISBN", type: TYPES.VarChar, value: ISBN },  
+    { name: "Quantidade", type: TYPES.Int, value: Quantidade }, 
+    { name: "Situacao", type: TYPES.VarChar, value: Situacao }, 
   ];
   await executeQuery(query, params); 
 }
 
 
-async function atualizarAcervo(Exemplar, nomeAutor, titulo, assunto, nChamada, acervo, isbn, quantidade, situacao) {
-const query = `UPDATE Livros SET nomeAutor = @nomeAutor, titulo = @titulo, assunto = @assunto, nChamada = @nChamada, acervo = @acervo, isbn = @isbn, quantidade = @quantidade, situacao = @situacao WHERE Exemplar = @Exemplar`
+async function atualizarAcervo(Exemplar, Autor, Título, Assunto, nChamada, Acervo, ISBN, Quantidade, Situacao) {
+const query = `UPDATE Livros SET Autor = @Autor, Título = @Título, Assunto = @Assunto, nChamada = @nChamada, Acervo = @Acervo, ISBN = @ISBN, Quantidade = @Quantidade, Situacao = @Situacao WHERE Exemplar = @Exemplar`
 
   const params = [
     { name: "Exemplar", type: TYPES.VarChar, value: Exemplar },  
-    { name: "nomeAutor", type: TYPES.VarChar, value: nomeAutor }, 
-    { name: "titulo", type: TYPES.VarChar, value: titulo }, 
-    { name: "assunto", type: TYPES.VarChar, value: assunto }, 
+    { name: "Autor", type: TYPES.VarChar, value: Autor }, 
+    { name: "Título", type: TYPES.VarChar, value: Título }, 
+    { name: "Assunto", type: TYPES.VarChar, value: Assunto }, 
     { name: "nChamada", type: TYPES.VarChar, value: nChamada }, 
-    { name: "acervo", type: TYPES.VarChar, value: acervo },  
-    { name: "isbn", type: TYPES.Int, value: isbn },  
-    { name: "quantidade", type: TYPES.Int, value: quantidade }, 
-    { name: "situacao", type: TYPES.VarChar, value: situacao }, 
+    { name: "Acervo", type: TYPES.VarChar, value: Acervo },  
+    { name: "ISBN", type: TYPES.VarChar, value: ISBN },  
+    { name: "Quantidade", type: TYPES.Int, value: Quantidade }, 
+    { name: "Situacao", type: TYPES.VarChar, value: Situacao }, 
   ];
   await executeQuery(query, params);  // Executa a query com os parâmetros
-}
-
-async function getAllBooks() {
-  const  query = "SELECT * FROM Livros";
-  return await executeQuery(query)
-
 }
 
 // Exporta as funções para serem usadas nos controllers
@@ -104,5 +98,4 @@ module.exports = {
   buscarPorExemplar,
   registrarAcervo,
   atualizarAcervo,
-  getAllBooks,
 };

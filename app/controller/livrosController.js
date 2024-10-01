@@ -25,10 +25,10 @@ async function buscarPorExemplar(req, res) {
 // Função para criar um novo usuário
 async function registrarAcervo(req, res) {
   // Extrai as informações do novo usuário a partir do corpo da requisição (name, email, age)
-  const { Exemplar, nomeAutor, titulo, assunto, nChamada, acervo, isbn, situacao } = req.body;
+  const { Exemplar, Autor, Título, Assunto, nChamada, Acervo, ISBN, Situacao, Quantidade } = req.body;
   try {
     // Chama o método do modelo para criar o novo usuário com os dados fornecExemplaros
-    await userModel.createUser(Exemplar, nomeAutor, titulo, assunto, nChamada, acervo, isbn, situacao);
+    await userModel.registrarAcervo(Exemplar, Autor, Título, Assunto, nChamada, Acervo, ISBN, Situacao, Quantidade);
     
     // Retorna um status 201 (criado com sucesso)
     res.status(201).send("Usuário criado com sucesso");
@@ -43,10 +43,10 @@ async function registrarAcervo(req, res) {
 async function atualizarAcervo(req, res) {
   // Extrai o Exemplar do usuário da URL e os novos dados do corpo da requisição
   const Exemplar = req.params.Exemplar;
-  const { nomeAutor, titulo, assunto, nChamada, acervo, isbn, situacao } = req.body;
+  const { Autor, Título, Assunto, nChamada, Acervo, ISBN, Quantidade, Situacao } = req.body;
   try {
     // Chama o método do modelo para atualizar o usuário com base no Exemplar e nos dados fornecExemplaros
-    await userModel.atualizarAcervo(Exemplar, nomeAutor, titulo, assunto, nChamada, acervo, isbn, situacao);
+    await userModel.atualizarAcervo(Exemplar, Autor, Título, Assunto, nChamada, Acervo, ISBN, Quantidade, Situacao);
     
     // Retorna uma mensagem de sucesso após a atualização
     res.send("Usuário atualizado com sucesso");
@@ -57,19 +57,9 @@ async function atualizarAcervo(req, res) {
   }
 }
 
-async function getBooks(req, res) {
-  try { 
-    const users = await userModel.getAllBooks();
-    res.json(users);
-} catch(err) {
-  console.error(err.message);
-  res.status(500).send("Erro ao obter os livros");
-}
-}
 
 module.exports = {
   buscarPorExemplar,
   registrarAcervo,
-  atualizarAcervo,
-  getBooks
+  atualizarAcervo
 };

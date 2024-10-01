@@ -8,7 +8,7 @@ var config = {
         "options": {
             "userName": "sa",
 
-            "password": "corinthians1910"
+            "password": "1327"
 
         }
     },
