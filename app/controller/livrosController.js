@@ -10,7 +10,7 @@ async function buscarPorExemplar(req, res) {
     
     // Se o usuário não for encontrado, retorna um status 404 (não encontrado)
     if (!user) {
-      res.status(404).send("Usuário não encontrado");
+      res.status(404).send("Exemplar não encontrado");
     } else {
       // Se o usuário for encontrado, retorna os dados em formato JSON
       res.json(user);
@@ -18,7 +18,7 @@ async function buscarPorExemplar(req, res) {
   } catch (err) {
     // Exibe o erro no console e retorna uma resposta com status 500
     console.error(err.message);
-    res.status(500).send("Erro ao obter o usuário");
+    res.status(500).send("Erro ao obter o exemplar");
   }
 }
 
