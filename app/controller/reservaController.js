@@ -11,7 +11,7 @@ async function registrarReserva(req, res) {
     await userModel.registrarReserva(Nome, Título, RM, CPF, Exemplar);
   
     // Retorna um status 201 (criado com sucesso)
-    res.status(201).send("Reserva criado com sucesso");
+    res.status(201).send("Reserva criada com sucesso");
   } catch (err) {
     // Exibe o erro no console e retorna uma resposta com status 500
     console.error(err.message);
