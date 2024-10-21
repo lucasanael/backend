@@ -66,7 +66,7 @@ async function registrarAcervo(Exemplar, Autor, Título, Assunto, nChamada, Acer
     { name: "Autor", type: TYPES.VarChar, value: Autor }, 
     { name: "Título", type: TYPES.VarChar, value: Título }, 
     { name: "Assunto", type: TYPES.VarChar, value: Assunto },
-    { name: "nChamda", type: TYPES.VarChar, value: nChamada },
+    { name: "nChamada", type: TYPES.VarChar, value: nChamada },
     { name: "Acervo", type: TYPES.VarChar, value: Acervo },  
     { name: "ISBN", type: TYPES.VarChar, value: ISBN },  
     { name: "Quantidade", type: TYPES.Int, value: Quantidade }, 

@@ -10,7 +10,7 @@ async function buscarPorExemplar(req, res) {
     
     // Se o usuário não for encontrado, retorna um status 404 (não encontrado)
     if (!user) {
-      res.status(404).send("Usuário não encontrado");
+      res.status(404).send("Exemplar não encontrado");
     } else {
       // Se o usuário for encontrado, retorna os dados em formato JSON
       res.json(user);
@@ -18,7 +18,7 @@ async function buscarPorExemplar(req, res) {
   } catch (err) {
     // Exibe o erro no console e retorna uma resposta com status 500
     console.error(err.message);
-    res.status(500).send("Erro ao obter o usuário");
+    res.status(500).send("Erro ao obter o exemplar");
   }
 }
 
@@ -31,11 +31,11 @@ async function registrarAcervo(req, res) {
     await userModel.registrarAcervo(Exemplar, Autor, Título, Assunto, nChamada, Acervo, ISBN, Quantidade ,Situacao);
   
     // Retorna um status 201 (criado com sucesso)
-    res.status(201).send("Usuário criado com sucesso");
+    res.status(201).send("Acervo criado com sucesso");
   } catch (err) {
     // Exibe o erro no console e retorna uma resposta com status 500
     console.error(err.message);
-    res.status(500).send("Erro ao criar o usuário");
+    res.status(500).send("Erro ao criar o acervo");
   }
 }
 
@@ -50,11 +50,11 @@ async function atualizarAcervo(req, res) {
     await userModel.atualizarAcervo(Exemplar, Autor, Título, Assunto, nChamada, Acervo, ISBN, Quantidade, Situacao);
 
     // Retorna uma mensagem de sucesso após a atualização
-    res.send("Usuário atualizado com sucesso");
+    res.send("Acervo atualizado com sucesso");
   } catch (err) {
     // Exibe o erro no console e retorna uma resposta com status 500
     console.error(err.message);
-    res.status(500).send("Erro ao atualizar o usuário");
+    res.status(500).send("Erro ao atualizar o acervo");
   }
 }
 
