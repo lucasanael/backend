@@ -46,8 +46,8 @@ async function executeQuery(query, params = []) {
 }
 
 
-async function createUsuario(cpf, Sexo, name, telefone, dataNasc, email) {
-  const query = `INSERT INTO cadastroUsuario (cpf, Sexo, nome, telefone, dataNasc, email) VALUES (@cpf, @Sexo, @nome, @telefone, @dataNasc, @email);`;  
+async function createColaborador(cpf, Sexo, name, telefone, dataNasc, email) {
+  const query = `INSERT INTO cadastroColaborador (cpf, Sexo, nome, telefone, dataNasc, email) VALUES (@cpf, @Sexo, @nome, @telefone, @dataNasc, @email);`;  
   const params = [
     { name: "cpf", type: TYPES.VarChar, value: cpf},
     { name: "Sexo", type: TYPES.Char, value: Sexo },  
@@ -59,7 +59,16 @@ async function createUsuario(cpf, Sexo, name, telefone, dataNasc, email) {
   await executeQuery(query, params); 
 }
 
+async function getColaboradorbyCPF(cpf) {
+  const query = "SELECT * FROM cadastroColaborador WHERE cpf = @cpf;";
+  const params = [{ name: "cpf", type: TYPES.VarChar, value: cpf }];
+  const users = await executeQuery(query, params);
+  return users.length > 0 ? users[0] : null;
+}
+
+
 module.exports = {
-  createUsuario,
+  createColaborador,
+  getColaboradorbyCPF
 
 };

@@ -52,11 +52,10 @@ async function executeQuery(query, params = []) {
 
 
 // Função para criar um novo usuário
-async function registrarEmprestimo(RM, Título, CPF, Exemplar, dataEmprestimo, dataDevolucao) {
-  const query = `INSERT INTO Empréstimo (RM, Título, CPF, Exemplar, dataEmprestimo, dataDevolucao) VALUES (@RM, @Título, @CPF, @Exemplar, @dataEmprestimo, @dataDevolucao);`;
+async function registrarEmprestimo(RM, CPF, Exemplar, dataEmprestimo, dataDevolucao) {
+  const query = `INSERT INTO Empréstimo (RM, CPF, Exemplar, dataEmprestimo, dataDevolucao) VALUES (@RM, @CPF, @Exemplar, @dataEmprestimo, @dataDevolucao);`;
   const params = [
     { name: "RM", type: TYPES.Int, value: RM },  
-    { name: "Título", type: TYPES.VarChar, value: Título },  
     { name: "CPF", type: TYPES.VarChar, value: CPF },  
     { name: "Exemplar", type: TYPES.VarChar, value: Exemplar },  
     { name: "dataEmprestimo", type: TYPES.Date, value: dataEmprestimo },  
