@@ -17,7 +17,11 @@ router.get('/buscaracervo/:Exemplar', livrosController.buscarPorExemplar);
 
 router.get('/buscaremprestimo/:Exemplar', livrosController.buscarEmprestimo);
 
+router.get('/todosemprestimos', livrosController.buscarTodosEmprestimo);
+
 router.put('/atualizaracervo/:Exemplar', livrosController.atualizarAcervo);
+
+router.delete('/deletaremprestimo/:Exemplar', emprestarController.deletarEmprestimo);
 
 router.post('/registrarcolaborador', cadastroColaboradorController.createColaborador);
 

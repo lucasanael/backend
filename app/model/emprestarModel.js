@@ -7,7 +7,7 @@ const connectDatabase = require("../db/connection");
 async function executeQuery(query, params = []) {
   // Estabelece uma conexão com o banco de dados
   const connection = await connectDatabase();
-  
+
   // Retorna uma Promise para lidar com a execução assíncrona da query
   return new Promise((resolve, reject) => {
     // Cria uma nova requisição SQL com a query passada e um callback para erros
@@ -55,19 +55,31 @@ async function executeQuery(query, params = []) {
 async function registrarEmprestimo(RM, CPF, Exemplar, dataEmprestimo, dataDevolucao) {
   const query = `INSERT INTO Empréstimo (RM, CPF, Exemplar, dataEmprestimo, dataDevolucao) VALUES (@RM, @CPF, @Exemplar, @dataEmprestimo, @dataDevolucao);`;
   const params = [
-    { name: "RM", type: TYPES.Int, value: RM },  
-    { name: "CPF", type: TYPES.VarChar, value: CPF },  
-    { name: "Exemplar", type: TYPES.VarChar, value: Exemplar },  
-    { name: "dataEmprestimo", type: TYPES.Date, value: dataEmprestimo },  
-    { name: "dataDevolucao", type: TYPES.Date, value: dataDevolucao },  
-    
+    { name: "RM", type: TYPES.Int, value: RM },
+    { name: "CPF", type: TYPES.VarChar, value: CPF },
+    { name: "Exemplar", type: TYPES.VarChar, value: Exemplar },
+    { name: "dataEmprestimo", type: TYPES.Date, value: dataEmprestimo },
+    { name: "dataDevolucao", type: TYPES.Date, value: dataDevolucao },
+
   ];
-  await executeQuery(query, params); 
+  await executeQuery(query, params);
+}
+
+async function deletarEmprestimo(Exemplar) {
+  const query = `DELETE FROM Empréstimo WHERE Exemplar = @Exemplar`
+
+  const params = [
+        { name: "Exemplar", type: TYPES.VarChar, value: Exemplar },
+
+
+  ];
+  await executeQuery(query, params);  // Executa a query com os parâmetros
 }
 
 
 
 // Exporta as funções para serem usadas nos controllers
 module.exports = {
-    registrarEmprestimo,
+  registrarEmprestimo,
+  deletarEmprestimo
 };

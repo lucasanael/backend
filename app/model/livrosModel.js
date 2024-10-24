@@ -51,6 +51,11 @@ async function executeQuery(query, params = []) {
 }
 
 // Função para obter um usuário pelo ID
+async function buscarTodosEmprestimo() {
+  const query = "SELECT * FROM Empréstimo;";  // Query SQL com um parâmetro para filtrar pelo ID
+  return await executeQuery(query);  // Executa a query com os parâmetros
+  
+}
 async function buscarPorExemplar(Exemplar) {
   const query = "SELECT * FROM Livros WHERE Exemplar = @Exemplar;";  // Query SQL com um parâmetro para filtrar pelo ID
   const params = [{ name: "Exemplar", type: TYPES.VarChar, value: Exemplar }];  // Define o parâmetro @id para ser passado na query
@@ -102,6 +107,7 @@ const query = `UPDATE Livros SET Autor = @Autor, Título = @Título, Assunto = @
 
 // Exporta as funções para serem usadas nos controllers
 module.exports = {
+  buscarTodosEmprestimo,
   buscarPorExemplar,
   buscarEmprestimo,
   registrarAcervo,

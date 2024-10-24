@@ -7,7 +7,7 @@ async function buscarPorExemplar(req, res) {
   try {
     // Chama o método do modelo para obter o usuário com base no Exemplar fornecExemplaro
     const user = await userModel.buscarPorExemplar(Exemplar);
-    
+
     // Se o usuário não for encontrado, retorna um status 404 (não encontrado)
     if (!user) {
       res.status(404).send("Exemplar não encontrado");
@@ -28,7 +28,7 @@ async function buscarEmprestimo(req, res) {
   try {
     // Chama o método do modelo para obter o usuário com base no Exemplar fornecExemplaro
     const user = await userModel.buscarEmprestimo(Exemplar);
-    
+
     // Se o usuário não for encontrado, retorna um status 404 (não encontrado)
     if (!user) {
       res.status(404).send("Exemplar não encontrado");
@@ -43,14 +43,30 @@ async function buscarEmprestimo(req, res) {
   }
 }
 
+async function buscarTodosEmprestimo(req, res) {
+
+  try {
+    // Chama o método do modelo para obter o usuário com base no Exemplar fornecExemplaro
+    const user = await userModel.buscarTodosEmprestimo();
+
+
+    res.json(user);
+
+  } catch (err) {
+    // Exibe o erro no console e retorna uma resposta com status 500
+    console.error(err.message);
+    res.status(500).send("Erro ao obter todos emprestimo");
+  }
+}
+
 // Função para criar um novo usuário
 async function registrarAcervo(req, res) {
   // Extrai as informações do novo usuário a partir do corpo da requisição (name, email, age)
-  const { Exemplar, Autor, Título, Assunto, nChamada, Acervo, ISBN, Quantidade ,Situacao } = req.body;
+  const { Exemplar, Autor, Título, Assunto, nChamada, Acervo, ISBN, Quantidade, Situacao } = req.body;
   try {
     // Chama o método do modelo para criar o novo usuário com os dados fornecExemplaros
-    await userModel.registrarAcervo(Exemplar, Autor, Título, Assunto, nChamada, Acervo, ISBN, Quantidade ,Situacao);
-  
+    await userModel.registrarAcervo(Exemplar, Autor, Título, Assunto, nChamada, Acervo, ISBN, Quantidade, Situacao);
+
     // Retorna um status 201 (criado com sucesso)
     res.status(201).send("Acervo criado com sucesso");
   } catch (err) {
@@ -84,5 +100,7 @@ module.exports = {
   buscarPorExemplar,
   buscarEmprestimo,
   registrarAcervo,
-  atualizarAcervo
+  atualizarAcervo,
+  buscarTodosEmprestimo
+
 };

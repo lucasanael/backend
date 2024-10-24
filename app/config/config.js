@@ -6,7 +6,7 @@ var config = {
     "authentication": {
         "type": "default",
         "options": {
-            "userName": "sa",
+            "userName": "Lucas",
 
             "password": "1327"
 
