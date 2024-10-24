@@ -15,6 +15,8 @@ router.post('/registraracervo', livrosController.registrarAcervo);
 
 router.get('/buscaracervo/:Exemplar', livrosController.buscarPorExemplar);
 
+router.get('/buscaremprestimo/:Exemplar', livrosController.buscarEmprestimo);
+
 router.put('/atualizaracervo/:Exemplar', livrosController.atualizarAcervo);
 
 router.post('/registrarcolaborador', cadastroColaboradorController.createColaborador);

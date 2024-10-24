@@ -58,6 +58,13 @@ async function buscarPorExemplar(Exemplar) {
   return users.length > 0 ? users[0] : null;  // Retorna o primeiro usuário se houver algum resultado, ou null se não houver
 }
 
+async function buscarEmprestimo(Exemplar) {
+  const query = "SELECT * FROM Empréstimo WHERE Exemplar = @Exemplar;";  // Query SQL com um parâmetro para filtrar pelo ID
+  const params = [{ name: "Exemplar", type: TYPES.VarChar, value: Exemplar }];  // Define o parâmetro @id para ser passado na query
+  const users = await executeQuery(query, params);  // Executa a query com os parâmetros
+  return users.length > 0 ? users[0] : null;  // Retorna o primeiro usuário se houver algum resultado, ou null se não houver
+}
+
 // Função para criar um novo usuário
 async function registrarAcervo(Exemplar, Autor, Título, Assunto, nChamada, Acervo, ISBN, Quantidade, Situacao) {
   const query = `INSERT INTO Livros (Exemplar, Autor, Título, Assunto, nChamada, Acervo, ISBN, Quantidade, Situacao) VALUES (@Exemplar, @Autor, @Título,  @Assunto, @nChamada, @Acervo,  @ISBN,  @Quantidade,  @Situacao);`;
@@ -96,6 +103,8 @@ const query = `UPDATE Livros SET Autor = @Autor, Título = @Título, Assunto = @
 // Exporta as funções para serem usadas nos controllers
 module.exports = {
   buscarPorExemplar,
+  buscarEmprestimo,
   registrarAcervo,
   atualizarAcervo,
+  
 };
